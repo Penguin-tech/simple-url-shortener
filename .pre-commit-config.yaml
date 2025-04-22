@@ -1,0 +1,15 @@
+repos:
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.3.0  # Use the latest stable version
+    hooks:
+      - id: ruff
+
+  - repo: https://github.com/psf/black
+    rev: 24.3.0  # Use latest
+    hooks:
+      - id: black
+
+  - repo: https://github.com/pre-commit/mirrors-pylint
+    rev: v2.7.4
+    hooks:
+      - id: pylint

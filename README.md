@@ -13,12 +13,13 @@
  2. Containerize It ✅
     Added dockerfile and tested locally
     ![alt text](images/image-1.png)
- 3. CI/CD (optional stretch goal)
+ 3. CI/CD (optional stretch goal) 
     Lets add some automation on image building
     Docker push on main added
     ![alt text](images/image-3.png)
     ![alt text](images/image-4.png)
  4. Infrastructure as Code
+    TF With Minikube
  5. Service as Code
  6. Secure the System
  7. Observability & Monitoring
