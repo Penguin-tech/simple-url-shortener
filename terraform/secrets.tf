@@ -1,6 +1,7 @@
 resource "kubernetes_secret" "docker_registry" {
   metadata {
     name = "docker-registry-secret"
+    namespace = kubernetes_namespace.url_shortener.metadata[0].name
   }
 
   data = {
@@ -16,4 +17,6 @@ resource "kubernetes_secret" "docker_registry" {
   }
 
   type = "kubernetes.io/dockerconfigjson"
+
+  depends_on = [kubernetes_namespace.url_shortener]
 }
