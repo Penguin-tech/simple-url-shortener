@@ -6,8 +6,10 @@
 
  Roadmap:
  1. Build the Python App
-    With a local db and postman, ![alt text](image.png)
-    aftervisting the given url it successfully translated into the correct url ![alt text](image-1.png)
+    With a local db and postman
+    ![alt text](image.png)
+    Added a simple front
+    ![alt text](image-2.png)
  2. Containerize It
  3. CI/CD (optional stretch goal)
  4. Infrastructure as Code

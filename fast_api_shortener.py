@@ -1,63 +1,79 @@
-from flask import Flask, request, redirect, jsonify
+from flask import Flask, request, redirect, render_template, jsonify
 import sqlite3
 import string
 import random
 import os
 
 app = Flask(__name__)
-DATABASE = 'urls.db'
+DB_FILE = 'urls.db'
 
-# --- DB Setup ---
+# ---------- DATABASE SETUP ----------
 def init_db():
-    with sqlite3.connect(DATABASE) as conn:
+    with sqlite3.connect(DB_FILE) as conn:
         conn.execute('''
             CREATE TABLE IF NOT EXISTS urls (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                short TEXT UNIQUE,
-                long TEXT NOT NULL
+                short_code TEXT UNIQUE NOT NULL,
+                original_url TEXT NOT NULL
             )
         ''')
 
-# --- Helper Functions ---
-def generate_short_code(length=6):
+# ---------- HELPERS ----------
+def generate_code(length=6):
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for _ in range(length))
 
-def store_url(long_url):
-    short = generate_short_code()
-    print(short)
-    with sqlite3.connect(DATABASE) as conn:
+def insert_url(original_url):
+    code = generate_code()
+
+    # ✅ Add protocol if missing
+    if not original_url.startswith(('http://', 'https://')):
+        original_url = 'http://' + original_url
+
+    print(f"Storing URL: {original_url} with code: {code}")
+
+    with sqlite3.connect(DB_FILE) as conn:
         try:
-            conn.execute('INSERT INTO urls (short, long) VALUES (?, ?)', (short, long_url))
-            return short
+            conn.execute(
+                'INSERT INTO urls (short_code, original_url) VALUES (?, ?)',
+                (code, original_url)
+            )
+            return code
         except sqlite3.IntegrityError:
-            return store_url(long_url)  # Retry if short code is not unique
+            return insert_url(original_url)
 
-def get_long_url(short):
-    with sqlite3.connect(DATABASE) as conn:
-        result = conn.execute('SELECT long FROM urls WHERE short = ?', (short,)).fetchone()
-        return result[0] if result else None
+def get_original_url(code):
+    with sqlite3.connect(DB_FILE) as conn:
+        row = conn.execute(
+            'SELECT original_url FROM urls WHERE short_code = ?',
+            (code,)
+        ).fetchone()
+        return row[0] if row else None
 
-# --- Routes ---
+# ---------- ROUTES ----------
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/shorten', methods=['POST'])
 def shorten():
-    data = request.get_json()
-    long_url = data.get('url')
+    long_url = request.form.get('url')
     if not long_url:
-        return jsonify({'error': 'No URL provided'}), 400
+        return render_template('index.html', error="No URL provided")
 
-    short = store_url(long_url)
-    return jsonify({'short_url': request.host_url + short})
+    short_code = insert_url(long_url)
+    short_url = request.host_url + short_code
+    return render_template('index.html', short_url=short_url)
 
-@app.route('/<short>')
-def redirect_to_url(short):
-    long_url = get_long_url(short)
-    if long_url:
-        return redirect(long_url)
-    return jsonify({'error': 'Short URL not found'}), 404
+@app.route('/<code>')
+def redirect_to_original(code):
+    original_url = get_original_url(code)
+    if original_url:
+        return redirect(original_url)
+    return jsonify({'error': 'URL not found'}), 404
 
-# --- Run App ---
+# ---------- RUN ----------
 if __name__ == '__main__':
-    if not os.path.exists(DATABASE):
+    if not os.path.exists(DB_FILE):
         init_db()
     app.run(debug=True)
