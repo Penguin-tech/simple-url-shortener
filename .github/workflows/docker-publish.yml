@@ -23,7 +23,7 @@ jobs:
 
       - name: Lint with pylint
         run: |
-          pylint url_shortener
+          pylint fast_api_shortener
         continue-on-error: true  # Optional: Continue even if pylint finds errors
 
   build:
