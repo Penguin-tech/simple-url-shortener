@@ -5,13 +5,17 @@
  Access the short code → redirect to the original URL
 
  Roadmap:
- 1. Build the Python App
+ 1. Build the Python App running locally ✅
     With a local db and postman
     ![alt text](image.png)
     Added a simple front
     ![alt text](image-2.png)
- 2. Containerize It
+ 2. Containerize It ✅
+    Added dockerfile and tested locally
+    ![alt text](image-1.png)
  3. CI/CD (optional stretch goal)
+    Lets add some automation on image building
+    
  4. Infrastructure as Code
  5. Service as Code
  6. Secure the System

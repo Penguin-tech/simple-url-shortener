@@ -76,4 +76,4 @@ def redirect_to_original(code):
 if __name__ == '__main__':
     if not os.path.exists(DB_FILE):
         init_db()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
