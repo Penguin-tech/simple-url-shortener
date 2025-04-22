@@ -23,7 +23,7 @@ jobs:
 
       - name: Lint with pylint
         run: |
-          pylint your_python_module
+          pylint url_shortener
         continue-on-error: true  # Optional: Continue even if pylint finds errors
 
   build:
@@ -47,14 +47,15 @@ jobs:
 
   security-scan:
     runs-on: ubuntu-latest
-    needs: lint
+    needs: build  # Run the security scan after the image has been built
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Install Trivy
         run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
+          curl -sfL https://github.com/aquasecurity/trivy/releases/download/v0.33.0/trivy_0.33.0_Linux-64bit.tar.gz | tar -xzv
+          sudo mv trivy /usr/local/bin/
 
       - name: Run Trivy Docker security scan
         run: |
