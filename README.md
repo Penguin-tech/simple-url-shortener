@@ -19,7 +19,8 @@
     ![alt text](images/image-3.png)
     ![alt text](images/image-4.png)
  4. Infrastructure as Code
-    TF With Minikube
+    TF, TF cloud with Minikube
  5. Service as Code
  6. Secure the System
  7. Observability & Monitoring
+ 8. secret migration from TF cloud to aws or azure secret managers
