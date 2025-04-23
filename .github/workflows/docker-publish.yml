@@ -45,7 +45,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git tag $new_tag
-          git push https://x-access-token:${{ secrets.GH_CREATE_TAG }}@origin $new_tag
+          git push https://x-access-token:${{ secrets.GH_CREATE_TAG }}@github.com/Penguin-tech/simple-url-shortener.git $new_tag
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
