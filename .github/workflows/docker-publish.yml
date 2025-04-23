@@ -2,6 +2,7 @@ name: Build and Push Docker Image with Linting and Security Scanning
 
 on:
   push:
+    paths: ['app/**']
     branches: [ main ]
 
 jobs:
