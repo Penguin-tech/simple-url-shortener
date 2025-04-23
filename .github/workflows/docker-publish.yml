@@ -38,7 +38,7 @@ jobs:
         id: set_version
         run: |
           # Get the latest tag from the Git repository
-          LATEST_TAG=$(git describe --tags --abbrev=0)
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
           echo "Latest tag: $LATEST_TAG"
 
           # If no tag is found, default to v0.1.0
