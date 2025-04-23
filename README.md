@@ -29,6 +29,7 @@
     Running on my local minikube forwarded to port 31928
     
  5. Service as Code
+   ![alt text](image.png)
  6. Secure the System
  7. Observability & Monitoring
  8. secret migration from TF cloud to aws or azure secret managers

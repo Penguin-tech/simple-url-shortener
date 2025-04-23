@@ -91,6 +91,7 @@ resource "helm_release" "url_shortener" {
   name       = "url-shortener"
   chart      = "../url-shortener-helm" 
   namespace = "url-shortener"
+  cleanup_on_fail  = true
 
   values = [
     # Optionally override values in values.yaml (can also pass dynamic variables here)

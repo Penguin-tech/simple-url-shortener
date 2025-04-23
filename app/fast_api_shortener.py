@@ -6,7 +6,7 @@ import string
 from flask import Flask, jsonify, redirect, render_template, request
 
 app = Flask(__name__)
-DB_FILE = "urls.db"
+DB_FILE = "/data/urls.db"
 
 
 # ---------- DATABASE SETUP ----------
