@@ -1,6 +1,7 @@
 name: Build and Push Docker Image with Linting and Security Scanning
 
 on:
+  workflow_dispatch:
   push:
     paths: ['app/**']
     branches: [ main ]
