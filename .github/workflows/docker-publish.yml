@@ -58,7 +58,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/url-shortener:${{ env.NEW_TAG }} .
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/url-shortener:${{ env.NEW_TAG }} .
+          docker tag ${{ secrets.DOCKER_USERNAME }}/url-shortener:${{ env.NEW_TAG }} ${{ secrets.DOCKER_USERNAME }}/url-shortener:latest
 
       - name: Push image to Docker Hub
         run: |
