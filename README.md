@@ -33,8 +33,8 @@
     Running on my local minikube forwarded to port 31928
     
  ✅5. App is now being deployed via helm release!✅
-
-   ![alt text](images/image-5.png)
+ 
+   ![alt text](images/image-7.png)
 
  6. Secure the System
  7. Observability & Monitoring
