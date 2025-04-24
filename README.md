@@ -5,7 +5,17 @@
  Posting a long URL → get a short code
  Access the short code → redirect to the original URL
 
- Roadmap:
+ Roadmap tldr:
+ 1. Build the Python App running locally ✅
+ 2. Containerize It ✅
+ 3. CI/CD (optional stretch goal) ✅
+ 4. Infrastructure as Code✅
+ 5. App is now being deployed via helm release!✅
+ 6. Secure the System
+ 7. Observability & Monitoring
+ 8. secret migration from TF cloud to aws or azure secret managers
+
+
  ✅1. Build the Python App running locally ✅
     With a local db and postman
     ![alt text](images/image.png)
