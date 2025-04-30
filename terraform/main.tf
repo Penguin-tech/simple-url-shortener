@@ -27,6 +27,12 @@ resource "kubernetes_namespace" "url_shortener" {
   }
 }
 
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = "monitoring"
+  }
+}
+
 # resource "kubernetes_deployment" "url_shortener" {
 #   metadata {
 #     name      = "url-shortener"
@@ -105,4 +111,34 @@ resource "helm_release" "url_shortener" {
   ]
 
   depends_on = [kubernetes_namespace.url_shortener]
+}
+
+resource "helm_release" "loki" {
+  name       = "loki"
+  repository = "https://grafana.github.io/helm-charts"
+  chart      = "loki-stack"
+  namespace  = "monitoring"
+  depends_on = [kubernetes_namespace.monitoring]
+}
+
+resource "helm_release" "grafana" {
+  name       = "grafana"
+  repository = "https://grafana.github.io/helm-charts"
+  chart      = "grafana"
+  namespace  = "monitoring"
+  depends_on = [kubernetes_namespace.monitoring]
+}
+
+resource "helm_release" "promtail" {
+  name       = "promtail"
+  repository = "https://grafana.github.io/helm-charts"
+  chart      = "promtail"
+  namespace  = "monitoring"
+  depends_on = [kubernetes_namespace.monitoring]
+
+  #not using lokigateway
+  set {
+    name  = "config.clients[0].url"
+    value = "http://10.106.122.205:3100/loki/api/v1/push"
+  }
 }
